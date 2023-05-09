@@ -1,0 +1,13 @@
+.form-control {
+  border: none;
+  border-radius: 0;
+  border-bottom: #fff solid 1px;
+}
+
+.form-control:focus {
+  /* border-color: #ffffff;
+    box-shadow: 0 0 0 0.2rem rgba(252, 252, 252, 0.25); */
+  border-bottom: #fff solid 1px;
+
+  box-shadow: none;
+}

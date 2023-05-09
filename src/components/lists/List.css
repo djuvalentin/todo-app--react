@@ -1,0 +1,8 @@
+.todo-list-item:hover {
+  cursor: pointer;
+}
+.todo-list-item.active {
+  font-weight: bold;
+  transform-origin: -10px;
+  transform: scale(1.3);
+}
