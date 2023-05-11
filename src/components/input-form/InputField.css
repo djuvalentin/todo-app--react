@@ -1,13 +1,24 @@
 .form-control {
   border: none;
   border-radius: 0;
-  border-bottom: #fff solid 1px;
 }
 
 .form-control:focus {
-  /* border-color: #ffffff;
-    box-shadow: 0 0 0 0.2rem rgba(252, 252, 252, 0.25); */
-  border-bottom: #fff solid 1px;
-
   box-shadow: none;
+}
+
+.input-list .form-control {
+  color: var(--bs-light);
+  border-bottom: var(--bs-light) solid 1px;
+}
+.input-task .form-control {
+  color: var(--bs-success);
+
+  border-bottom: var(--bs-success) solid 1px;
+}
+.input-list .form-control:focus {
+  border-bottom: var(--bs-light) solid 1px;
+}
+.input-task .form-control:focus {
+  border-bottom: var(--bs-success) solid 1px;
 }

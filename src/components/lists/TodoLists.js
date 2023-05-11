@@ -1,13 +1,19 @@
 import React from "react";
 import List from "./List";
 
-const TodoLists = () => {
+const TodoLists = (props) => {
   return (
     <ul className="todo-lists">
-      <List />
-      <List />
-      <List />
-      <List />
+      {props.todoLists.map((list, i) => {
+        return (
+          <List
+            onShowList={props.onShowList}
+            key={i}
+            title={list}
+            active={list === props.activeList}
+          />
+        );
+      })}
     </ul>
   );
 };

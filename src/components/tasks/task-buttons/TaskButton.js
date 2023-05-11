@@ -5,8 +5,18 @@ import "./TaskButton.css";
 const TaskButton = (props) => {
   const className = `btn btn-outline-secondary task-btn-${props.buttonType}`;
 
+  const manageTask = function () {
+    const [action, taskID] = [...this];
+
+    (action === "check" || action === "uncheck") &&
+      props.onToggleCrossOff(taskID);
+  };
+
   return (
-    <button className={className}>
+    <button
+      onClick={manageTask.bind([props.buttonType, props.taskID])}
+      className={className}
+    >
       <BootstrapIcon bootstrapIconName={props.bootstrapIconName} />
     </button>
   );
