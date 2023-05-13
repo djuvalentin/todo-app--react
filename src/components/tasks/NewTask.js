@@ -1,8 +1,8 @@
-import React from "react";
-import InputFrom from "../input-form/InputForm";
+import React from 'react';
+import InputFrom from '../InputForm';
 
-const NewTask = (props) => {
-  return <InputFrom inputType={props.inputType} />;
+const NewTask = props => {
+  return <InputFrom onAddNewTask={props.onAddNewTask} inputType="task" />;
 };
 
 export default NewTask;

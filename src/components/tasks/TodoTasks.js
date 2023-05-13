@@ -1,11 +1,12 @@
-import React from "react";
-import Task from "./Task";
+import React from 'react';
+import Task from './Task';
 
-const TodoTasks = (props) => {
+const TodoTasks = props => {
   return (
     <ul className="list-group fs-4 mb-4">
       {props.tasks.map((task, i) => (
         <Task
+          onPromptDelete={props.onPromptDelete}
           onToggleCrossOff={props.onToggleCrossOff}
           key={i}
           title={task.title}

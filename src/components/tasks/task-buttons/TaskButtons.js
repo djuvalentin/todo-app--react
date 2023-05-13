@@ -1,8 +1,8 @@
-import React from "react";
-import TaskButton from "./TaskButton";
-import "./TaskButtons.css";
+import React from 'react';
+import TaskButton from './TaskButton';
+import './TaskButtons.css';
 
-const TaskButtons = (props) => {
+const TaskButtons = props => {
   return (
     <div
       className="col-4 btn-group task-btns"
@@ -10,16 +10,19 @@ const TaskButtons = (props) => {
       aria-label="Manage task"
     >
       <TaskButton
-        onToggleCrossOff={props.onToggleCrossOff}
+        onManage={props.onToggleCrossOff}
         taskID={props.taskID}
-        buttonType={props.taskDone ? "uncheck" : "check"}
+        taskTitle={props.taskTitle}
+        buttonType={props.taskDone ? 'uncheck' : 'check'}
         bootstrapIconName={
-          "bi-" + (props.taskDone ? "arrow-counterclockwise" : "check-lg")
+          'bi-' + (props.taskDone ? 'arrow-counterclockwise' : 'check-lg')
         }
       />
 
       <TaskButton
+        onManage={props.onPromptDelete}
         taskID={props.taskID}
+        taskTitle={props.taskTitle}
         buttonType="delete"
         bootstrapIconName="bi-dash-circle"
       />

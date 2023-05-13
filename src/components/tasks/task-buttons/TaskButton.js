@@ -1,24 +1,39 @@
-import React from "react";
-import BootstrapIcon from "../../icons/BootstrapIcon";
-import "./TaskButton.css";
+import React from 'react';
+import Button from 'react-bootstrap/Button';
+import BootstrapIcon from './ButtonIcon';
+import './TaskButton.css';
 
-const TaskButton = (props) => {
-  const className = `btn btn-outline-secondary task-btn-${props.buttonType}`;
+const TaskButton = props => {
+  // const manageTask = function () {
+  //   const [action, taskID] = [...this];
 
-  const manageTask = function () {
-    const [action, taskID] = [...this];
+  //   // Check / Uncheck Task
+  //   (action === 'check' || action === 'uncheck') &&
+  //     props.onToggleCrossOff(taskID);
 
-    (action === "check" || action === "uncheck") &&
-      props.onToggleCrossOff(taskID);
+  //   // Show Delete Modal
+  // };
+  // return (
+  //   <button
+  //     onClick={manageTask.bind([props.buttonType, props.taskID])}
+  //     className={className}
+  //   >
+  //     <BootstrapIcon bootstrapIconName={props.bootstrapIconName} />
+  //   </button>
+  // );
+
+  const manageItemHandler = () => {
+    if (props.buttonType === 'delete') props.onManage('task', props.taskID);
+    else props.onManage(props.taskID);
   };
-
   return (
-    <button
-      onClick={manageTask.bind([props.buttonType, props.taskID])}
-      className={className}
+    <Button
+      variant="outline-secondary"
+      className={'task-btn-' + props.buttonType}
+      onClick={manageItemHandler}
     >
       <BootstrapIcon bootstrapIconName={props.bootstrapIconName} />
-    </button>
+    </Button>
   );
 };
 

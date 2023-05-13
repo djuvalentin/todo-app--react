@@ -1,7 +1,7 @@
-import React from "react";
-import InputForm from "../input-form/InputForm";
+import React from 'react';
+import InputForm from '../InputForm';
 
-const NewList = (props) => {
+const NewList = props => {
   return <InputForm inputType="list" onAddNewList={props.onAddNewList} />;
 };
 
