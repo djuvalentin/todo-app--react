@@ -1,0 +1,5 @@
+.crossed-off {
+  text-decoration: line-through;
+  color: var(--bs-success);
+  opacity: 0.5;
+}

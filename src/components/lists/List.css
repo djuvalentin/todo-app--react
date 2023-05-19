@@ -1,4 +1,6 @@
 .todo-list-item {
+  border: none;
+
   transition: 0.3s;
 }
 .todo-list-item:hover {
@@ -7,6 +9,9 @@
 .todo-list-item.active {
   font-weight: bold;
   font-size: 1.8rem;
+}
+
+.list-title {
 }
 
 .list-btn {

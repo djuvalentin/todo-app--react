@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ListsBox from './components/lists/ListsBox';
-import TasksBox from './components/tasks/TasksBox';
+import ListBox from './components/lists/ListBox';
+import TaskBox from './components/tasks/TaskBox';
 import ModalDelete from './components/ModalDelete';
 
 // const lists = [
@@ -63,6 +63,8 @@ function App() {
       const cloneTodos = JSON.parse(JSON.stringify(prevTodos));
       cloneTodos[listTitle] = [];
 
+      setActiveList(listTitle);
+
       return cloneTodos;
     });
   };
@@ -102,7 +104,22 @@ function App() {
     setShowDeletionModal(false);
   };
 
-  const deleteList = () => {};
+  const deleteList = function () {
+    const listName = this;
+
+    setTodos(prevTodos => {
+      const cloneTodos = JSON.parse(JSON.stringify(prevTodos));
+
+      delete cloneTodos[listName];
+
+      setActiveList(Object.keys(cloneTodos)[0]);
+
+      return cloneTodos;
+    });
+
+    //Close Modal
+    setShowDeletionModal(false);
+  };
 
   const deleteTask = function () {
     const taskID = this;
@@ -123,9 +140,12 @@ function App() {
 
   const promptDeleteHandler = (type, itemIdentifier) => {
     setDeletionItemIdentifier(() => itemIdentifier);
-    setDeleteHandler(() => deleteTask);
     setModalType(type);
     setShowDeletionModal(true);
+    setDeleteHandler(() => {
+      if (type === 'task') return deleteTask;
+      if (type === 'list') return deleteList;
+    });
   };
 
   return (
@@ -134,17 +154,18 @@ function App() {
         <h1 className="text-center">To Do App</h1>
         <div className="container">
           <div className="row">
-            <ListsBox
+            <ListBox
               onShowList={showListHandler}
               onAddNewList={addNewListHandler}
               todoLists={lists}
               activeList={activeList}
             />
-            <TasksBox
+            <TaskBox
               onPromptDelete={promptDeleteHandler}
               onAddNewTask={addNewTaskHandler}
               onToggleCrossOff={toggleCrossOffHandler}
               listTasks={tasks}
+              activeList={activeList}
             />
           </div>
         </div>
@@ -161,3 +182,17 @@ function App() {
 }
 
 export default App;
+
+//TODO:
+//DONE Create a message in tasks container when list is empty
+//DONE Create a message in lists container when there are no lists
+//DONE Do not render tasks container if there are no lists
+//DONE Mark list as active on addList
+//DONE add a warning message if the list already exists
+//DONE create a ValidationFailMessage component
+//DONE adjust styles for the warning message
+//DONE adjust styles for delete list button
+//DONE adjust styles for task buttons for better visibility
+//DONE adjust styles for crossed off tasks
+//DONE add a submit button to the form
+// adjust responsivnes

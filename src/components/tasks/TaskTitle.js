@@ -1,12 +1,9 @@
-import React from "react";
+import React from 'react';
+import './TaskTitle.css';
 
-const TaskTitle = (props) => {
+const TaskTitle = props => {
   return (
-    <span
-      className={
-        "col-8" + (props.done ? " text-decoration-line-through text-muted" : "")
-      }
-    >
+    <span className={'col-8' + (props.done ? ' crossed-off' : '')}>
       {props.title}
     </span>
   );

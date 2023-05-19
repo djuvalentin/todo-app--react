@@ -1,17 +1,23 @@
-import React from "react";
-import "./List.css";
+import React from 'react';
+import ListGroupItem from 'react-bootstrap/ListGroupItem';
+import './List.css';
 
-const List = (props) => {
+const List = props => {
   const showList = function () {
-    props.onShowList(this);
+    props.onShowList(props.title);
   };
 
   return (
-    <li className={"todo-list-item m-2" + (props.active ? " active" : "")}>
-      <button onClick={showList.bind(props.title)} className="list-btn">
-        {props.title}
-      </button>
-    </li>
+    <ListGroupItem
+      onClick={showList}
+      as="li"
+      className={
+        'todo-list-item bg-transparent text-light d-flex justify-content-between' +
+        (props.active ? ' active' : '')
+      }
+    >
+      {props.title}
+    </ListGroupItem>
   );
 };
 

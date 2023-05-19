@@ -1,9 +1,10 @@
-import React from "react";
-import List from "./List";
+import React from 'react';
+import ListGroup from 'react-bootstrap/ListGroup';
+import List from './List';
 
-const TodoLists = (props) => {
+const TodoLists = props => {
   return (
-    <ul className="todo-lists">
+    <ListGroup as="ul" className="todo-lists">
       {props.todoLists.map((list, i) => {
         return (
           <List
@@ -14,7 +15,7 @@ const TodoLists = (props) => {
           />
         );
       })}
-    </ul>
+    </ListGroup>
   );
 };
 
