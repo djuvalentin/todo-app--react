@@ -2,15 +2,7 @@ import React, { useState } from 'react';
 import ListBox from './components/lists/ListBox';
 import TaskBox from './components/tasks/TaskBox';
 import ModalDelete from './components/ModalDelete';
-
-// const lists = [
-//   { id: "001", title: "Work" },
-//   { id: "002", title: "Home" },
-//   { id: "003", title: "Grocery" },
-//   { id: "004", title: "Other" },
-// ];
-
-// const tasks = [{ id: "001", title: "Banana", list: "" }];
+import './MediaQuery.css';
 
 const DUMMY_DATA = {
   Work: [
@@ -182,17 +174,3 @@ function App() {
 }
 
 export default App;
-
-//TODO:
-//DONE Create a message in tasks container when list is empty
-//DONE Create a message in lists container when there are no lists
-//DONE Do not render tasks container if there are no lists
-//DONE Mark list as active on addList
-//DONE add a warning message if the list already exists
-//DONE create a ValidationFailMessage component
-//DONE adjust styles for the warning message
-//DONE adjust styles for delete list button
-//DONE adjust styles for task buttons for better visibility
-//DONE adjust styles for crossed off tasks
-//DONE add a submit button to the form
-// adjust responsivnes

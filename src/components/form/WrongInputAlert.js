@@ -4,9 +4,7 @@ import BootstrapIcon from '../BootsrapIcon';
 import './WrongInputAlert.css';
 
 const WrongInputAlert = props => {
-  const alertClassName = `alert ${
-    props.show ? `` : 'd-none'
-  } d-flex m-2 position-absolute`;
+  const alertClassName = `alert ${props.show ? `` : 'd-none'} d-flex m-2`;
 
   return (
     <Alert key="warning" variant="warning" className={alertClassName}>

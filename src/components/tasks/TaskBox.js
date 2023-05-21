@@ -10,7 +10,7 @@ const TaskBox = props => {
   const boxEmpty = props.listTasks.length === 0;
 
   return (
-    <div className="task-box col-6 px-0 pb-3 m-4 bg-light text-success">
+    <div className="task-box col-md-7 px-0 pb-3 my-4 mx-auto bg-light text-success">
       <TaskBoxHeading
         onPromptDelete={props.onPromptDelete}
         activeList={props.activeList}

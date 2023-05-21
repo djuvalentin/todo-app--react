@@ -11,7 +11,7 @@ const TaskButton = props => {
   return (
     <Button
       variant="outline-secondary"
-      className={'fs-5 p-0 task-btn-' + props.buttonType}
+      className={'task-btn fs-5 p-0 task-btn-' + props.buttonType}
       onClick={manageTaskHandler}
     >
       <BootstrapIcon bootstrapIconName={props.bootstrapIconName} />

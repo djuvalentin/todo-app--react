@@ -1,0 +1,8 @@
+@media screen and (max-width: 540px) {
+  .task-title {
+    font-size: 1.1rem;
+  }
+  .task-btn {
+    font-size: small !important;
+  }
+}
