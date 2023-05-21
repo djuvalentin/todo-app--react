@@ -5,7 +5,7 @@ const TaskTitle = props => {
   return (
     <span
       className={
-        'border task-title d-flex align-items-center col-8' +
+        'task-title d-flex align-items-center col-8' +
         (props.done ? ' crossed-off' : '')
       }
     >
