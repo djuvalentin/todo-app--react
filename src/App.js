@@ -174,3 +174,10 @@ function App() {
 }
 
 export default App;
+
+// TODO
+// refactor for css modules
+// Try to separate components into an UI folder (buttons, icons, modal etc)
+// Refactor modal with custom prompt object properties for each prompt
+// Take the modal out of App.js and render it on each component that will trigger it individually if the propmpt object exists
+// Make the invalid input message disappear when making a change to the input

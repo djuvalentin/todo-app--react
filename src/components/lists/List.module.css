@@ -1,0 +1,7 @@
+.custom-transition {
+  transition: 0.3s;
+}
+.active {
+  font-weight: bold;
+  font-size: 1.8rem;
+}

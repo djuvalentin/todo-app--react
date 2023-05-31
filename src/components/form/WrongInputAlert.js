@@ -1,10 +1,15 @@
 import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import BootstrapIcon from '../BootsrapIcon';
-import './WrongInputAlert.css';
+import styles from './WrongInputAlert.module.css';
 
 const WrongInputAlert = props => {
-  const alertClassName = `alert ${props.show ? `` : 'd-none'} d-flex m-2`;
+  const alertClassName = [
+    'd-flex',
+    'm-2',
+    styles['custom-min-width-250px'],
+    !props.show && 'd-none',
+  ].join(' ');
 
   return (
     <Alert key="warning" variant="warning" className={alertClassName}>

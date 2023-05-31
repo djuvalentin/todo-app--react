@@ -1,0 +1,6 @@
+.custom-hover-color {
+  color: var(--bs-dark);
+}
+.custom-hover-color:hover {
+  color: var(--bs-danger);
+}

@@ -1,11 +1,17 @@
 import React from 'react';
 import TaskButton from './TaskButton';
-import './TaskButtons.css';
+import styles from './TaskButtons.module.css';
 
 const TaskButtons = props => {
+  const buttonsCombinedClasses = [
+    'col-4',
+    'btn-group',
+    styles['min-width-100px'],
+  ].join(' ');
+
   return (
     <div
-      className="col-4 btn-group task-btns"
+      className={buttonsCombinedClasses}
       role="group"
       aria-label="Manage task"
     >

@@ -3,12 +3,36 @@ import Form from 'react-bootstrap/Form';
 import WrongInputAlert from './WrongInputAlert';
 import SubmitButton from './SubmitButton';
 
-import './InputForm.css';
+import styles from './InputForm.module.css';
 
 const InputForm = props => {
-  const wrapClassName = `input-group input-${props.inputType}`;
+  //CLASSES
+  const wrapCombinedClasses = [
+    'w-75',
+    'input-group',
+    styles['max-width-20rem'],
+  ].join(' ');
+  const textCombinedClasses = [
+    'input-group-text',
+    'border-0',
+    'bg-transparent',
+    'py-0',
+    'fs-1',
+    'lh-sm',
+    props.inputType === 'list' ? 'text-light' : 'text-success',
+  ].join(' ');
+  const controlCombinedClasses = [
+    'bg-transparent',
+    'shadow-none',
+    'border-0',
+    'border-bottom',
+    props.inputType === 'list'
+      ? 'text-light border-light'
+      : 'text-success border-success',
+  ].join(' ');
 
-  const label = `Add new ${props.inputType}`;
+  //STATE
+  const inputFieldLabel = `Add new ${props.inputType}`;
 
   const [inputValue, setInputValue] = useState('');
   const [validTitleInput, setValidTitleInput] = useState(true);
@@ -17,12 +41,7 @@ const InputForm = props => {
     setInputValue(e.target.value);
   };
 
-  // const validListTitle = () => {
-  //   return !props.todoLists.some(
-  //     list => list.toLowerCase() === inputValue.toLowerCase()
-  //   );
-  // };
-
+  //DATA VALIDATION
   let validListTitle;
 
   const submitHandler = e => {
@@ -48,15 +67,13 @@ const InputForm = props => {
 
   return (
     <Form onSubmit={submitHandler}>
-      <Form.Group className={wrapClassName}>
-        <Form.Text className="input-group-text bg-transparent py-0 fs-1 lh-sm">
-          +
-        </Form.Text>
+      <Form.Group className={wrapCombinedClasses}>
+        <Form.Text className={textCombinedClasses}>+</Form.Text>
         <Form.Control
-          className="bg-transparent"
+          className={controlCombinedClasses}
           type="text"
-          placeholder={label}
-          aria-label={label}
+          placeholder={inputFieldLabel}
+          aria-label={inputFieldLabel}
           aria-describedby="button-addon2"
           value={inputValue}
           onChange={addListChangeListener}
