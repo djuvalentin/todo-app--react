@@ -1,9 +1,9 @@
-.task-btn-check:hover {
+.check:hover {
   background-color: var(--bs-success);
 }
-.task-btn-uncheck:hover {
+.uncheck:hover {
   background-color: var(--bs-orange);
 }
-.task-btn-delete:hover {
+.delete:hover {
   background-color: var(--bs-danger);
 }

@@ -4,7 +4,7 @@ import List from './List';
 
 const TodoLists = props => {
   return (
-    <ListGroup as="ul" className="todo-lists">
+    <ListGroup as="ul">
       {props.todoLists.map((list, i) => {
         return (
           <List

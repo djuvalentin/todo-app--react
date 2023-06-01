@@ -3,12 +3,14 @@ import TaskTitle from './TaskTitle';
 import TaskButtons from './task-buttons/TaskButtons';
 
 const Task = props => {
+  const listItemCombinedClasses = ['list-group-item', 'container'].join(' ');
+
   return (
-    <li className="list-group-item container task">
+    <li className={listItemCombinedClasses}>
       <div className="row">
         <TaskTitle title={props.title} done={props.done} />
         <TaskButtons
-          onPromptDelete={props.onPromptDelete}
+          onDeleteTask={props.onDeleteTask}
           onToggleCrossOff={props.onToggleCrossOff}
           taskDone={props.done}
           taskID={props.id}

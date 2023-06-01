@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import ListBox from './components/lists/ListBox';
 import TaskBox from './components/tasks/TaskBox';
-import ModalDelete from './components/ModalDelete';
 import './MediaQuery.css';
 
 const DUMMY_DATA = {
@@ -38,12 +37,6 @@ function App() {
   const lists = Object.keys(todos);
   const tasks = todos[activeList];
 
-  // MODAL //
-  const [showDeletionModal, setShowDeletionModal] = useState(false);
-  const [modalType, setModalType] = useState('');
-  const [deletionItemIdentifier, setDeletionItemIdentifier] = useState('');
-  const [deleteHandler, setDeleteHandler] = useState(() => () => null);
-
   // const [tasks, setTasks] = useState(todos[activeList]);
 
   const showListHandler = listTitle => {
@@ -72,8 +65,6 @@ function App() {
       const cloneTodos = JSON.parse(JSON.stringify(prevTodos));
       cloneTodos[activeList].push(newTask);
 
-      console.log(cloneTodos);
-
       return cloneTodos;
     });
   };
@@ -92,13 +83,7 @@ function App() {
     });
   };
 
-  const hideModalHandler = () => {
-    setShowDeletionModal(false);
-  };
-
-  const deleteList = function () {
-    const listName = this;
-
+  const deleteListHandler = listName => {
     setTodos(prevTodos => {
       const cloneTodos = JSON.parse(JSON.stringify(prevTodos));
 
@@ -108,14 +93,9 @@ function App() {
 
       return cloneTodos;
     });
-
-    //Close Modal
-    setShowDeletionModal(false);
   };
 
-  const deleteTask = function () {
-    const taskID = this;
-
+  const deleteTaskHandler = taskID => {
     setTodos(prevTodos => {
       const cloneTodos = JSON.parse(JSON.stringify(prevTodos));
       const itemIndex = cloneTodos[activeList].findIndex(
@@ -125,50 +105,37 @@ function App() {
 
       return cloneTodos;
     });
-
-    //Close Modal
-    setShowDeletionModal(false);
   };
 
-  const promptDeleteHandler = (type, itemIdentifier) => {
-    setDeletionItemIdentifier(() => itemIdentifier);
-    setModalType(type);
-    setShowDeletionModal(true);
-    setDeleteHandler(() => {
-      if (type === 'task') return deleteTask;
-      if (type === 'list') return deleteList;
-    });
-  };
+  const appContainerCombinedClasses = [
+    'bg-success',
+    'bg-gradient',
+    'vh-100',
+    'text-light',
+    'pt-5',
+  ].join(' ');
 
   return (
-    <div>
-      <div className="bg-success bg-gradient vh-100 text-light pt-5">
-        <h1 className="text-center">To Do App</h1>
-        <div className="container">
-          <div className="row">
-            <ListBox
-              onShowList={showListHandler}
-              onAddNewList={addNewListHandler}
-              todoLists={lists}
-              activeList={activeList}
-            />
-            <TaskBox
-              onPromptDelete={promptDeleteHandler}
-              onAddNewTask={addNewTaskHandler}
-              onToggleCrossOff={toggleCrossOffHandler}
-              listTasks={tasks}
-              activeList={activeList}
-            />
-          </div>
+    <div className={appContainerCombinedClasses}>
+      <h1 className="text-center">To Do App</h1>
+      <div className="container">
+        <div className="row">
+          <ListBox
+            onShowList={showListHandler}
+            onAddNewList={addNewListHandler}
+            todoLists={lists}
+            activeList={activeList}
+          />
+          <TaskBox
+            onDeleteList={deleteListHandler}
+            onDeleteTask={deleteTaskHandler}
+            onAddNewTask={addNewTaskHandler}
+            onToggleCrossOff={toggleCrossOffHandler}
+            listTasks={tasks}
+            activeList={activeList}
+          />
         </div>
       </div>
-      <ModalDelete
-        type={modalType}
-        show={showDeletionModal}
-        onHide={hideModalHandler}
-        onDelete={deleteHandler}
-        deletionItemIdentifier={deletionItemIdentifier}
-      />
     </div>
   );
 }
@@ -176,8 +143,8 @@ function App() {
 export default App;
 
 // TODO
-// refactor for css modules
-// Try to separate components into an UI folder (buttons, icons, modal etc)
-// Refactor modal with custom prompt object properties for each prompt
-// Take the modal out of App.js and render it on each component that will trigger it individually if the propmpt object exists
-// Make the invalid input message disappear when making a change to the input
+// DONE refactor for css modules
+// DONE Try to separate components into a UI folder (buttons, icons, modal etc)
+// DONE Refactor modal with custom prompt object properties for each prompt
+// DONE Take the modal out of App.js and render it on each component that will trigger it individually if the propmpt object exists
+// DONE Make the invalid input message disappear when making a change to the input

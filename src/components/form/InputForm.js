@@ -37,8 +37,9 @@ const InputForm = props => {
   const [inputValue, setInputValue] = useState('');
   const [validTitleInput, setValidTitleInput] = useState(true);
 
-  const addListChangeListener = e => {
+  const addInputChangeListener = e => {
     setInputValue(e.target.value);
+    setValidTitleInput(true);
   };
 
   //DATA VALIDATION
@@ -47,20 +48,22 @@ const InputForm = props => {
   const submitHandler = e => {
     e.preventDefault();
 
-    if (!inputValue) return;
+    const newListTitle = inputValue.trim();
+
+    if (!newListTitle) return;
 
     if (props.inputType === 'list') {
       validListTitle = !props.todoLists?.some(
-        list => list.toLowerCase() === inputValue.toLowerCase()
+        list => list.toLowerCase() === newListTitle.toLowerCase()
       );
 
       if (!validListTitle) return setValidTitleInput(false);
 
-      props.onAddNewList(inputValue);
+      props.onAddNewList(newListTitle);
       setValidTitleInput(true);
     }
 
-    if (props.inputType === 'task') props.onAddNewTask(inputValue);
+    if (props.inputType === 'task') props.onAddNewTask(newListTitle);
 
     setInputValue('');
   };
@@ -76,7 +79,7 @@ const InputForm = props => {
           aria-label={inputFieldLabel}
           aria-describedby="button-addon2"
           value={inputValue}
-          onChange={addListChangeListener}
+          onChange={addInputChangeListener}
         />
         <SubmitButton inputValue={inputValue} inputType={props.inputType} />
       </Form.Group>

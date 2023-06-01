@@ -1,8 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TaskButton from './TaskButton';
+import ModalDelete from '../../UI/ModalDelete';
 import styles from './TaskButtons.module.css';
 
 const TaskButtons = props => {
+  const [deletePrompt, setDeletePrompt] = useState(null);
+
+  const showModalHandler = () => {
+    setDeletePrompt({
+      title: `Remove task`,
+      message: `Are you sure you want to delete '${props.taskTitle}' task?`,
+    });
+  };
+
+  const closeModalHandler = () => {
+    setDeletePrompt(null);
+  };
+
+  const deleteTaskHandler = () => {
+    props.onDeleteTask(props.taskID);
+    setDeletePrompt(null);
+  };
+
+  const toggleCrossOffHandler = () => {
+    props.onToggleCrossOff(props.taskID);
+    setDeletePrompt(null);
+  };
+
   const buttonsCombinedClasses = [
     'col-4',
     'btn-group',
@@ -16,21 +40,19 @@ const TaskButtons = props => {
       aria-label="Manage task"
     >
       <TaskButton
-        onManage={props.onToggleCrossOff}
-        taskID={props.taskID}
-        taskTitle={props.taskTitle}
-        buttonType={props.taskDone ? 'uncheck' : 'check'}
+        onManageTask={toggleCrossOffHandler}
+        taskDone={props.taskDone}
         bootstrapIconName={
           'bi-' + (props.taskDone ? 'arrow-counterclockwise' : 'check-lg')
         }
       />
-
-      <TaskButton
-        onManage={props.onPromptDelete}
-        taskID={props.taskID}
-        taskTitle={props.taskTitle}
-        buttonType="delete"
-        bootstrapIconName="bi-dash-circle"
+      <TaskButton onManageTask={showModalHandler} deleteButton={true} />
+      <ModalDelete
+        onClose={closeModalHandler}
+        onDelete={deleteTaskHandler}
+        show={deletePrompt}
+        title={deletePrompt && deletePrompt.title}
+        message={deletePrompt && deletePrompt.message}
       />
     </div>
   );

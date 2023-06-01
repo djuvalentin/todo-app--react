@@ -1,28 +1,36 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import BootstrapIcon from '../../BootsrapIcon';
 import styles from './TaskButton.module.css';
 
 const TaskButton = props => {
+  let buttonType;
+  let bootstrapIcon;
+
+  if (props.deleteButton) {
+    buttonType = 'delete';
+    bootstrapIcon = 'bi bi-dash-circle';
+  } else if (props.taskDone) {
+    buttonType = 'uncheck';
+    bootstrapIcon = 'bi bi-arrow-counterclockwise';
+  } else {
+    buttonType = 'check';
+    bootstrapIcon = 'bi bi-check-lg';
+  }
+
   const btnCombinedClasses = [
     'fs-5',
     'p-0',
     'task-btn',
-    styles[`task-btn-${props.buttonType}`],
-  ];
-
-  const manageTaskHandler = () => {
-    if (props.buttonType === 'delete') props.onManage('task', props.taskID);
-    else props.onManage(props.taskID);
-  };
+    styles[buttonType],
+  ].join(' ');
 
   return (
     <Button
+      onClick={props.onManageTask}
       variant="outline-secondary"
       className={btnCombinedClasses}
-      onClick={manageTaskHandler}
     >
-      <BootstrapIcon bootstrapIconName={props.bootstrapIconName} />
+      <i className={bootstrapIcon}></i>
     </Button>
   );
 };
