@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Card.module.css';
 
-const Card = props => {
+export default function Card({ variant, children }) {
   const taskVariantCombinedClasses = [
     'col-md-7',
     'pb-3',
@@ -16,13 +16,11 @@ const Card = props => {
     'my-4',
     'mx-auto',
     styles['custom-h-fit-content'],
-    props.variant === 'task' && taskVariantCombinedClasses,
-    props.variant === 'list' && listVatiantCombinedClasses,
+    variant === 'task' && taskVariantCombinedClasses,
+    variant === 'list' && listVatiantCombinedClasses,
   ]
     .flat()
     .join(' ');
 
-  return <div className={cardCombinedClasses}>{props.children}</div>;
-};
-
-export default Card;
+  return <div className={cardCombinedClasses}>{children}</div>;
+}

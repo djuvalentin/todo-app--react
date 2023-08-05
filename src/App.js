@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import ListBox from './components/lists/ListBox';
-import TaskBox from './components/tasks/TaskBox';
+import ListsCard from './components/lists/ListsCard';
+import TasksCard from './components/tasks/TasksCard';
+import ModalDelete from './components/UI/ModalDelete';
 import './MediaQuery.css';
 
 const DUMMY_DATA = {
@@ -30,20 +31,27 @@ const DUMMY_DATA = {
   ],
 };
 
-function App() {
+export default function App() {
   // ToDos //
   const [todos, setTodos] = useState(DUMMY_DATA);
   const [activeList, setActiveList] = useState('Work');
+  const [modalData, setModalData] = useState(null);
   const lists = Object.keys(todos);
   const tasks = todos[activeList];
 
-  // const [tasks, setTasks] = useState(todos[activeList]);
+  const appContainerCombinedClasses = [
+    'bg-success',
+    'bg-gradient',
+    'vh-100',
+    'text-light',
+    'pt-5',
+  ].join(' ');
 
-  const showListHandler = listTitle => {
+  function handleSelectList(listTitle) {
     setActiveList(listTitle);
-  };
+  }
 
-  const addNewListHandler = listTitle => {
+  function handleAddNewList(listTitle) {
     setTodos(prevTodos => {
       const cloneTodos = JSON.parse(JSON.stringify(prevTodos));
       cloneTodos[listTitle] = [];
@@ -52,9 +60,9 @@ function App() {
 
       return cloneTodos;
     });
-  };
+  }
 
-  const addNewTaskHandler = taskTitle => {
+  function handleAddNewTask(taskTitle) {
     const newTask = {
       id: `${Date.now()}`,
       title: taskTitle,
@@ -67,9 +75,33 @@ function App() {
 
       return cloneTodos;
     });
-  };
+  }
 
-  const toggleCrossOffHandler = taskID => {
+  function handleDeleteList() {
+    setTodos(prevTodos => {
+      const cloneTodos = JSON.parse(JSON.stringify(prevTodos));
+
+      delete cloneTodos[activeList];
+
+      setActiveList(Object.keys(cloneTodos)[0]);
+
+      return cloneTodos;
+    });
+  }
+
+  function handleDeleteTask(taskID) {
+    setTodos(prevTodos => {
+      const cloneTodos = JSON.parse(JSON.stringify(prevTodos));
+
+      cloneTodos[activeList] = cloneTodos[activeList].filter(
+        task => task.id !== taskID
+      );
+
+      return cloneTodos;
+    });
+  }
+
+  function handleMarkDone(taskID) {
     setTodos(prevTodos => {
       const cloneTodos = JSON.parse(JSON.stringify(prevTodos));
       const toggledTask = cloneTodos[activeList].find(
@@ -81,58 +113,51 @@ function App() {
 
       return cloneTodos;
     });
-  };
+  }
 
-  const deleteListHandler = listName => {
-    setTodos(prevTodos => {
-      const cloneTodos = JSON.parse(JSON.stringify(prevTodos));
+  function handleShowModal(itemId) {
+    const selectedTask = tasks.find(task => task.id === itemId);
 
-      delete cloneTodos[listName];
+    const itemType = selectedTask ? 'task' : 'list';
+    const itemTitle = selectedTask ? selectedTask.title : activeList;
 
-      setActiveList(Object.keys(cloneTodos)[0]);
-
-      return cloneTodos;
+    setModalData({
+      itemType,
+      itemTitle,
+      itemId,
     });
-  };
+  }
 
-  const deleteTaskHandler = taskID => {
-    setTodos(prevTodos => {
-      const cloneTodos = JSON.parse(JSON.stringify(prevTodos));
-      const itemIndex = cloneTodos[activeList].findIndex(
-        task => task.id === taskID
-      );
-      cloneTodos[activeList].splice(itemIndex, 1);
-
-      return cloneTodos;
-    });
-  };
-
-  const appContainerCombinedClasses = [
-    'bg-success',
-    'bg-gradient',
-    'vh-100',
-    'text-light',
-    'pt-5',
-  ].join(' ');
+  function handleCloseModal() {
+    setModalData(null);
+  }
 
   return (
     <div className={appContainerCombinedClasses}>
       <h1 className="text-center">To Do App</h1>
       <div className="container">
         <div className="row">
-          <ListBox
-            onShowList={showListHandler}
-            onAddNewList={addNewListHandler}
+          <ListsCard
+            onSelectList={handleSelectList}
+            onAddNewList={handleAddNewList}
             todoLists={lists}
             activeList={activeList}
           />
-          <TaskBox
-            onDeleteList={deleteListHandler}
-            onDeleteTask={deleteTaskHandler}
-            onAddNewTask={addNewTaskHandler}
-            onToggleCrossOff={toggleCrossOffHandler}
-            listTasks={tasks}
+          <TasksCard
+            onShowModal={handleShowModal}
+            onAddNewTask={handleAddNewTask}
+            onMarkDone={handleMarkDone}
+            tasks={tasks}
             activeList={activeList}
+          />
+          <ModalDelete
+            show={modalData}
+            itemType={modalData?.itemType}
+            itemTitle={modalData?.itemTitle}
+            itemId={modalData?.itemId}
+            onCloseModal={handleCloseModal}
+            onDeleteList={handleDeleteList}
+            onDeleteTask={handleDeleteTask}
           />
         </div>
       </div>
@@ -140,11 +165,4 @@ function App() {
   );
 }
 
-export default App;
-
-// TODO
-// DONE refactor for css modules
-// DONE Try to separate components into a UI folder (buttons, icons, modal etc)
-// DONE Refactor modal with custom prompt object properties for each prompt
-// DONE Take the modal out of App.js and render it on each component that will trigger it individually if the propmpt object exists
-// DONE Make the invalid input message disappear when making a change to the input
+// TODO: fix 'undefined' showing on the modal when closing due to the animation delay

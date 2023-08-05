@@ -1,3 +1,11 @@
+.custom-min-with-200px {
+  min-width: 200px;
+}
+.crossed-off {
+  text-decoration: line-through;
+  color: var(--bs-success);
+  opacity: 0.5;
+}
 .check:hover {
   background-color: var(--bs-success);
 }

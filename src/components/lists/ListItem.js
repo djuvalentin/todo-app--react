@@ -1,8 +1,8 @@
 import React from 'react';
 import ListGroupItem from 'react-bootstrap/ListGroupItem';
-import styles from './List.module.css';
+import styles from './ListItem.module.css';
 
-const List = props => {
+export default function ListItem({ active, title, onSelectList }) {
   const listCombinedClasses = [
     'border-0',
     'bg-transparent',
@@ -12,18 +12,16 @@ const List = props => {
     'btn',
     'cursor-pointer',
     styles['custom-transition'],
-    props.active && styles.active,
+    active && styles.active,
   ];
 
-  const showList = function () {
-    props.onShowList(props.title);
-  };
-
   return (
-    <ListGroupItem onClick={showList} as="li" className={listCombinedClasses}>
-      {props.title}
+    <ListGroupItem
+      onClick={() => onSelectList(title)}
+      as="li"
+      className={listCombinedClasses}
+    >
+      {title}
     </ListGroupItem>
   );
-};
-
-export default List;
+}

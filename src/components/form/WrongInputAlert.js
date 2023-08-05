@@ -2,12 +2,12 @@ import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import styles from './WrongInputAlert.module.css';
 
-const WrongInputAlert = props => {
+export default function WrongInputAlert({ show }) {
   const alertCombinedClasses = [
     'd-flex',
     'm-2',
     styles['custom-min-width-250px'],
-    !props.show && 'd-none',
+    !show && 'd-none',
   ].join(' ');
 
   const bootstrapIconCombinedClasses = [
@@ -27,6 +27,4 @@ const WrongInputAlert = props => {
       </p>
     </Alert>
   );
-};
-
-export default WrongInputAlert;
+}

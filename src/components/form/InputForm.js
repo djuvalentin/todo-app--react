@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import WrongInputAlert from './WrongInputAlert';
-import SubmitButton from './SubmitButton';
 
 import styles from './InputForm.module.css';
 
-const InputForm = props => {
+export default function InputForm({
+  inputType,
+  todoLists,
+  onAddNewList,
+  onAddNewTask,
+}) {
   //CLASSES
   const wrapCombinedClasses = [
     'w-75',
@@ -19,54 +24,49 @@ const InputForm = props => {
     'py-0',
     'fs-1',
     'lh-sm',
-    props.inputType === 'list' ? 'text-light' : 'text-success',
+    inputType === 'list' ? 'text-light' : 'text-success',
   ].join(' ');
   const controlCombinedClasses = [
     'bg-transparent',
     'shadow-none',
     'border-0',
     'border-bottom',
-    props.inputType === 'list'
+    inputType === 'list'
       ? 'text-light border-light'
       : 'text-success border-success',
   ].join(' ');
 
   //STATE
-  const inputFieldLabel = `Add new ${props.inputType}`;
+  const inputFieldLabel = `Add new ${inputType}`;
 
   const [inputValue, setInputValue] = useState('');
-  const [validTitleInput, setValidTitleInput] = useState(true);
-
-  const addInputChangeListener = e => {
-    setInputValue(e.target.value);
-    setValidTitleInput(true);
-  };
+  const [isValidInput, setIsValidInput] = useState(true);
 
   //DATA VALIDATION
-  let validListTitle;
+  let isValidListTitle;
 
-  const submitHandler = e => {
+  function submitHandler(e) {
     e.preventDefault();
 
     const newListTitle = inputValue.trim();
 
     if (!newListTitle) return;
 
-    if (props.inputType === 'list') {
-      validListTitle = !props.todoLists?.some(
+    if (inputType === 'list') {
+      isValidListTitle = !todoLists?.some(
         list => list.toLowerCase() === newListTitle.toLowerCase()
       );
 
-      if (!validListTitle) return setValidTitleInput(false);
+      if (!isValidListTitle) return setIsValidInput(false);
 
-      props.onAddNewList(newListTitle);
-      setValidTitleInput(true);
+      onAddNewList(newListTitle);
+      setIsValidInput(true);
     }
 
-    if (props.inputType === 'task') props.onAddNewTask(newListTitle);
+    if (inputType === 'task') onAddNewTask(newListTitle);
 
     setInputValue('');
-  };
+  }
 
   return (
     <Form onSubmit={submitHandler}>
@@ -79,17 +79,20 @@ const InputForm = props => {
           aria-label={inputFieldLabel}
           aria-describedby="button-addon2"
           value={inputValue}
-          onChange={addInputChangeListener}
+          onChange={e => {
+            setInputValue(e.target.value);
+            setIsValidInput(true);
+          }}
         />
-        <SubmitButton inputValue={inputValue} inputType={props.inputType} />
+        <Button
+          type="submit"
+          className={inputValue ? '' : 'd-none'}
+          variant={inputType === 'list' ? 'outline-light' : 'outline-success'}
+        >
+          Add
+        </Button>
       </Form.Group>
-      {props.inputType === 'list' ? (
-        <WrongInputAlert show={!validTitleInput} />
-      ) : (
-        ''
-      )}
+      {inputType === 'list' ? <WrongInputAlert show={!isValidInput} /> : ''}
     </Form>
   );
-};
-
-export default InputForm;
+}

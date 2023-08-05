@@ -1,21 +1,37 @@
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-const ModalDelete = props => {
+export default function ModalDelete({
+  itemType,
+  itemTitle,
+  itemId,
+  show,
+  onCloseModal,
+  onDeleteTask,
+  onDeleteList,
+}) {
+  function handleDeleteItem() {
+    if (itemType === 'task') onDeleteTask(itemId);
+    if (itemType === 'list') onDeleteList(itemId);
+    onCloseModal();
+  }
+
   return (
-    <Modal show={props.show} centered>
-      <Modal.Header closeButton onClick={props.onClose}>
-        <Modal.Title>{props.title}</Modal.Title>
+    <Modal show={show} centered>
+      <Modal.Header closeButton onClick={onCloseModal}>
+        <Modal.Title>{show ? `Remove ${itemType}` : ''}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{props.message}</Modal.Body>
+      <Modal.Body>
+        {show
+          ? `Are you sure you want to delete '${itemTitle}' ${itemType}`
+          : ''}
+      </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={props.onClose}>
+        <Button variant="secondary" onClick={onCloseModal}>
           No
         </Button>
-        <Button variant="danger" onClick={props.onDelete}>{`Delete`}</Button>
+        <Button variant="danger" onClick={handleDeleteItem}>{`Delete`}</Button>
       </Modal.Footer>
     </Modal>
   );
-};
-
-export default ModalDelete;
+}
