@@ -7,7 +7,7 @@ import styles from './InputForm.module.css';
 
 export default function InputForm({
   inputType,
-  todoLists,
+  lists,
   onAddNewList,
   onAddNewTask,
 }) {
@@ -53,7 +53,7 @@ export default function InputForm({
     if (!newListTitle) return;
 
     if (inputType === 'list') {
-      isValidListTitle = !todoLists?.some(
+      isValidListTitle = !lists?.some(
         list => list.toLowerCase() === newListTitle.toLowerCase()
       );
 

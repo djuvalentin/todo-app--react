@@ -55,7 +55,7 @@ export default function TasksCard({
       <ListGroup as="ul" className={unorderedListCombinedClasses}>
         {tasks.map((task, i) => (
           <TaskItem
-            onShowModal={() => onShowModal(task.id)}
+            onShowModal={onShowModal}
             onMarkDone={onMarkDone}
             key={i}
             title={task.title}

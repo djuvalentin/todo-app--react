@@ -6,12 +6,12 @@ import ListItem from './ListItem';
 import InputForm from '../form/InputForm';
 
 export default function ListsCard({
-  todoLists,
+  lists,
   activeList,
   onSelectList,
   onAddNewList,
 }) {
-  const cardEmpty = todoLists.length === 0;
+  const cardEmpty = lists.length === 0;
   const headingCombinedClasses = ['text-center', 'border'].join(' ');
 
   return (
@@ -22,7 +22,7 @@ export default function ListsCard({
         show={cardEmpty}
       />
       <ListGroup as="ul">
-        {todoLists.map((list, i) => {
+        {lists.map((list, i) => {
           return (
             <ListItem
               onSelectList={onSelectList}
@@ -33,11 +33,7 @@ export default function ListsCard({
           );
         })}
       </ListGroup>
-      <InputForm
-        inputType="list"
-        onAddNewList={onAddNewList}
-        todoLists={todoLists}
-      />
+      <InputForm inputType="list" onAddNewList={onAddNewList} lists={lists} />
     </Card>
   );
 }

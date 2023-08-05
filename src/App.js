@@ -140,7 +140,7 @@ export default function App() {
           <ListsCard
             onSelectList={handleSelectList}
             onAddNewList={handleAddNewList}
-            todoLists={lists}
+            lists={lists}
             activeList={activeList}
           />
           <TasksCard

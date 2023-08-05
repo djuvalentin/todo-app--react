@@ -52,7 +52,7 @@ export default function TaskItem({ done, title, id, onShowModal, onMarkDone }) {
             <i className={iconCheckCombinedClasses}></i>
           </Button>
           <Button
-            onClick={onShowModal}
+            onClick={() => onShowModal(id)}
             className={btnDeleteCombinedClasses}
             variant={btnVariant}
           >
